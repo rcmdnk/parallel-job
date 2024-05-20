@@ -158,3 +158,21 @@ def n_prime(start: int, end: int) -> int:
                 continue
         n += 1
     return n
+
+
+def n_prime_none(start: int, end: int) -> None:
+    """
+    Count the number of prime numbers in a given range, and always return nothing.
+
+    Parameters
+    ----------
+    start : int
+        The start of the range.
+    end : int
+        The end of the range.
+
+    Returns
+    -------
+    None
+    """
+    _ = n_prime(start, end)
