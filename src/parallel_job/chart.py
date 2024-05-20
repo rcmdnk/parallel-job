@@ -91,8 +91,8 @@ def summary_chart(
         figsize=(6, (len(backends) + 3) * 0.5), layout="tight"
     )
     bars = ax.barh(
-        y=backends,
-        width=lengths,
+        y=reversed(backends),
+        width=reversed(lengths),
         height=1,
         color="skyblue",
         edgecolor="black",
