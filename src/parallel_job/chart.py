@@ -102,7 +102,7 @@ def summary_chart(
         ax.text(
             bar.get_width() / 2,
             bar.get_y() + bar.get_height() / 2,
-            f"{num_string(bar.get_width())}",
+            f"{num_string(bar.get_width())}s",
             ha="center",
             va="center",
             color="black",
