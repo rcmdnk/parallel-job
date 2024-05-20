@@ -89,6 +89,7 @@ max-complexity = 10
 docstring-convention = "numpy"
 
 [tool.bandit]
+skips = ["B301", "B403"]
 exclude_dirs = ["tests"]
 
 [tool.mypy]

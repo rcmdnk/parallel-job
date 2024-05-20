@@ -2,96 +2,115 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from .doc import append_docstring, doc_test_parallel
 from .parallel import parallel_wrapper
 from .utils import num_string
 
 if TYPE_CHECKING:
     from typing import Any, Callable
 
+    from .type_helper import ArgsList, KwargsList
 
+
+@append_docstring(doc_test_parallel)
 def test_parallel(
     func: Callable[..., Any],
-    name: str | None = None,
+    args_list: ArgsList,
+    kwargs_list: KwargsList | None = None,
     n_jobs: int = 1,
-    args: tuple[Any, ...] = (),
-    kwargs: dict[str, Any] | None = None,
+    verbose: int = 0,
+    backends: list[str] | None = None,
+    name: str = "",
+    log_level: int = 20,
     fig_type: str = "jpg",
 ) -> None:
     """
     Test parallel execution using different backends and visualize the results.
-
-    Parameters
-    ----------
-    func : Callable
-        The function to execute.
-    name : str, optional
-        The name of the test (default is None).
-    n_jobs : int, optional
-        Number of parallel jobs (default is 1).
-    args : tuple, optional
-        The positional arguments for the function (default is ()).
-    kwargs : dict | None, optional
-        The keyword arguments for the function (default is None).
-    fig_type : str, optional
-        File type for the saved chart (default is "jpg").
     """
     import logging
 
+    logging.basicConfig(level=log_level, format="%(message)s")
     log = logging.getLogger("parallel")
+
+    if backends is None:
+        backends = [
+            "for_loop",
+            "list_comprehension",
+            "async_run",
+            "threading_run",
+            "pool",
+            "process",
+            "thread_pool_executor",
+            "process_pool_executor",
+            "joblib_loky",
+            "joblib_threading",
+            "subinterpreter_json_pickle",
+            "subinterpreter_pickle_pickle",
+        ]
 
     name = name or func.__name__
     log.info(f"testing {name}\n---")
 
     ret = {}
-    for backend in [
-        "for_loop",
-        "list_comprehension",
-        "async_job",
-        "threading_job",
-        "pool",
-        "process",
-        "thread_pool_executor",
-        "process_pool_executor",
-        "joblib_loky",
-        "joblib_threading",
-        "subinterpreter",
-    ]:
+    for backend in backends:
         ret[backend] = parallel_wrapper(
             func,
+            args_list=args_list,
+            kwargs_list=kwargs_list,
             n_jobs=n_jobs,
-            args=args,
-            kwargs=kwargs,
+            verbose=verbose,
             backend=backend,
-            verbose=0,
             measure_time=True,
         )
         log.info(
             f"{backend:25s}: {num_string((ret[backend][1][1] - ret[backend][1][0]).total_seconds())}s"
         )
-    ref = list(ret.values())[0][0][0]
+    ref = [x[0] for x in list(ret.values())[0][0]]
     for x in ret:
-        if ret[x][0] != ref:
+        v = [x[0] for x in ret[x][0]]
+        if v != ref:
             log.info(f"{x} is different from ref")
-            log.info(ret[x][0], ref)
+            log.info(v)
+            log.info(ref)
 
-    max_time = max([(x[2] - x[1]).total_seconds() for x in ret.values()])
+    max_time = max([(x[1][1] - x[1][0]).total_seconds() for x in ret.values()])
     from .chart import waterfall_chart
 
     for backend in ret:
         waterfall_chart(
             f"{name}_{backend}",
-            ret[backend][1],
-            ret[backend][2],
-            ret[backend][3],
+            ret[backend][1][0],
+            ret[backend][1][1],
+            [x[1] for x in ret[backend][0]],
             max_time,
             fig_type,
         )
 
-    width = [(x[2] - x[1]).total_seconds() for x in ret.values()]
     names = list(ret)
+    width = [(x[1][1] - x[1][0]).total_seconds() for x in ret.values()]
     from .chart import summary_chart
 
     summary_chart(f"{name}_summary", names, width, fig_type)
+
+
+def sleep_1(x: int) -> int:
+    """
+    Sleep 1 seconds and return input value.
+
+    Parameters
+    ----------
+    x : int
+        Input value.
+
+    Returns
+    -------
+    int
+        The input value.
+    """
+    import time
+
+    time.sleep(1)
+    return x
 
 
 def sleep(x: int) -> int:
@@ -110,7 +129,7 @@ def sleep(x: int) -> int:
     """
     import time
 
-    time.sleep(1)
+    time.sleep(x)
     return x
 
 

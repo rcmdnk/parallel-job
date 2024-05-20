@@ -41,10 +41,11 @@ def waterfall_chart(
         for x in reversed(starts_ends)
     ]
     starts, lengthes = zip(*data)
-    names = [str(i) for i in range(len(data), 0, -1)]
-    _, ax = plt.subplots(figsize=(6, len(data) * 0.5))
+    names = [f"job_{str(i)}" for i in (range(len(data), 0, -1))]
+    _, ax = plt.subplots(figsize=(6, len(data) * 0.5), layout="tight")
     bars = ax.barh(
-        y=names,
+        y=range(len(data)),
+        tick_label=names,
         width=lengthes,
         left=starts,
         height=1,
@@ -78,7 +79,6 @@ def waterfall_chart(
     ax.set_ylabel("job")
     ax.set_xlabel("time [s]")
     ax.set_title(name)
-    plt.tight_layout()
     plt.subplots_adjust(right=0.95)
     plt.savefig(f"{name}.{fig_type}")
     plt.close()
@@ -87,7 +87,9 @@ def waterfall_chart(
 def summary_chart(
     name: str, backends: list[str], lengths: list[float], fig_type: str = "jpg"
 ) -> None:
-    _, ax = plt.subplots(figsize=(6, len(backends) * 0.5))
+    _, ax = plt.subplots(
+        figsize=(6, (len(backends) + 3) * 0.5), layout="tight"
+    )
     bars = ax.barh(
         y=backends,
         width=lengths,
@@ -108,6 +110,5 @@ def summary_chart(
 
     ax.set_xlabel("time [s]")
     ax.set_title(name)
-    plt.tight_layout()
     plt.savefig(f"{name}.{fig_type}")
     plt.close()
