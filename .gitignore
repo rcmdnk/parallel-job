@@ -166,7 +166,7 @@ cython_debug/
 #/data/
 #/ouputs/
 #/log/
-#/tmp/
+/tmp/
 #/test_*/
 #/tests_*/
 #/work/
