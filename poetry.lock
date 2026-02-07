@@ -13,13 +13,13 @@ files = [
 
 [[package]]
 name = "babel"
-version = "2.17.0"
+version = "2.18.0"
 description = "Internationalization utilities"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "babel-2.17.0-py3-none-any.whl", hash = "sha256:4d0b53093fdfb4b21c92b5213dba5a1b23885afa8383709427046b21c366e5f2"},
-    {file = "babel-2.17.0.tar.gz", hash = "sha256:0c54cffb19f690cdcc52a3b50bcbf71e07a808d1c80d549f2459b9d2cf0afb9d"},
+    {file = "babel-2.18.0-py3-none-any.whl", hash = "sha256:e2b422b277c2b9a9630c1d7903c2a00d0830c409c59ac8cae9081c92f1aeba35"},
+    {file = "babel-2.18.0.tar.gz", hash = "sha256:b80b99a14bd085fcacfa15c9165f651fbb3406e66cc603abf11c5750937c992d"},
 ]
 
 [package.extras]
@@ -2110,13 +2110,13 @@ zstd = ["backports-zstd (>=1.0.0)"]
 
 [[package]]
 name = "validate-pyproject"
-version = "0.24.1"
+version = "0.25"
 description = "Validation library and CLI tool for checking on 'pyproject.toml' files using JSON Schema"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "validate_pyproject-0.24.1-py3-none-any.whl", hash = "sha256:b7b05fa9117204c9c4606ab317acd095b18d1bfc78fb7dc8cc06f77d0582ca2d"},
-    {file = "validate_pyproject-0.24.1.tar.gz", hash = "sha256:e182fc51354add988e5bee6fc06ceb327832a78d921730fc618275e5b29e6b71"},
+    {file = "validate_pyproject-0.25-py3-none-any.whl", hash = "sha256:f9d05e2686beff82f9ea954f582306b036ced3d3feb258c1110f2c2a495b1981"},
+    {file = "validate_pyproject-0.25.tar.gz", hash = "sha256:e68c12d1cb0d8ddc269ffc42875a81727ddb7865000aa6d2f77d833b55c53f0b"},
 ]
 
 [package.dependencies]
@@ -2131,13 +2131,13 @@ store = ["validate-pyproject-schema-store"]
 
 [[package]]
 name = "wcwidth"
-version = "0.5.0"
+version = "0.6.0"
 description = "Measures the displayed width of unicode strings in a terminal"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wcwidth-0.5.0-py3-none-any.whl", hash = "sha256:1efe1361b83b0ff7877b81ba57c8562c99cf812158b778988ce17ec061095695"},
-    {file = "wcwidth-0.5.0.tar.gz", hash = "sha256:f89c103c949a693bf563377b2153082bf58e309919dfb7f27b04d862a0089333"},
+    {file = "wcwidth-0.6.0-py3-none-any.whl", hash = "sha256:1a3a1e510b553315f8e146c54764f4fb6264ffad731b3d78088cdb1478ffbdad"},
+    {file = "wcwidth-0.6.0.tar.gz", hash = "sha256:cdc4e4262d6ef9a1a57e018384cbeb1208d8abbc64176027e2c2455c81313159"},
 ]
 
 [[package]]
